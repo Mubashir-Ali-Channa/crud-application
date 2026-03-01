@@ -1,0 +1,117 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    padding: 24px;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #f8fafc;
+    background:
+        radial-gradient(circle at 12% 18%, rgba(56, 189, 248, 0.38), transparent 35%),
+        radial-gradient(circle at 88% 82%, rgba(236, 72, 153, 0.36), transparent 32%),
+        linear-gradient(140deg, #0f172a 0%, #1e293b 45%, #3b0764 100%);
+}
+
+.container {
+    width: min(520px, 92vw);
+    padding: 28px;
+    border-radius: 18px;
+    background: rgba(15, 23, 42, 0.68);
+    border: 1px solid rgba(148, 163, 184, 0.25);
+    box-shadow: 0 24px 48px rgba(2, 6, 23, 0.45);
+    backdrop-filter: blur(12px);
+    text-align: center;
+}
+
+h2 {
+    margin: 0 0 18px;
+    font-size: 1.5rem;
+    letter-spacing: 0.4px;
+}
+
+input {
+    width: 100%;
+    padding: 11px 12px;
+    margin: 7px 0;
+    border-radius: 10px;
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    background: rgba(15, 23, 42, 0.45);
+    color: #e2e8f0;
+    outline: none;
+}
+
+input::placeholder {
+    color: #94a3b8;
+}
+
+input:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+}
+
+button {
+    padding: 9px 12px;
+    margin: 6px 4px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 0.84rem;
+    font-weight: 600;
+    transition: transform 0.15s ease, filter 0.15s ease;
+}
+
+button:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.05);
+}
+
+.add-btn {
+    width: 100%;
+    color: #082f49;
+    background: linear-gradient(90deg, #67e8f9, #22d3ee);
+}
+
+.update-btn {
+    width: 100%;
+    color: #172554;
+    background: linear-gradient(90deg, #fde68a, #f59e0b);
+}
+
+.delete-btn {
+    color: #fff;
+    background: linear-gradient(90deg, #fb7185, #e11d48);
+}
+
+.edit-btn {
+    color: #fff;
+    background: linear-gradient(90deg, #60a5fa, #2563eb);
+}
+
+hr {
+    border: none;
+    border-top: 1px solid rgba(148, 163, 184, 0.3);
+    margin: 14px 0;
+}
+
+ul {
+    list-style: none;
+    margin: 10px 0 0;
+    padding: 0;
+}
+
+li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 7px 0;
+    padding: 10px;
+    border-radius: 10px;
+    background: rgba(15, 23, 42, 0.55);
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    color: #e2e8f0;
+}
