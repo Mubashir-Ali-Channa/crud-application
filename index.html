@@ -2,7 +2,77 @@
 <html>
 <head>
     <title>Student CRUD App</title>
-    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 520px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        h2 {
+            margin-top: 0;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 14px;
+            border: 0;
+            border-radius: 6px;
+            color: #fff;
+            cursor: pointer;
+            margin-right: 6px;
+            margin-bottom: 8px;
+        }
+
+        .add-btn {
+            background: #198754;
+        }
+
+        .update-btn {
+            background: #0d6efd;
+        }
+
+        .edit-btn {
+            background: #fd7e14;
+            margin-top: 8px;
+            margin-right: 8px;
+        }
+
+        .delete-btn {
+            background: #dc3545;
+            margin-top: 8px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+    </style>
 </head>
 <body>
 
@@ -25,6 +95,105 @@
 
 </div>
 
-<script src="scripts.js"></script>
+<script>
+let selectedId = null;
+
+function addStudent() {
+    let name = document.getElementById("name").value;
+    let age = document.getElementById("age").value;
+    let course = document.getElementById("course").value;
+
+    fetch("/students", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, age, course })
+    })
+    .then(function() {
+        clearFields();
+        getStudents();
+    })
+    .catch(function() {
+        alert("Backend is not connected on Vercel yet.");
+    });
+}
+
+function getStudents() {
+    fetch("/students")
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+        var list = document.getElementById("list");
+        list.innerHTML = "";
+
+        data.forEach(function(student) {
+            var li = document.createElement("li");
+
+            li.innerHTML =
+                student.name + " | " +
+                student.age + " | " +
+                student.course +
+                "<br>" +
+                "<button class='edit-btn' onclick='editStudent(\"" + student._id + "\", \"" + student.name + "\", \"" + student.age + "\", \"" + student.course + "\")'>Edit</button>" +
+                "<button class='delete-btn' onclick='deleteStudent(\"" + student._id + "\")'>Delete</button>";
+
+            list.appendChild(li);
+        });
+    })
+    .catch(function() {
+        document.getElementById("list").innerHTML = "<li>Backend is not connected on Vercel yet.</li>";
+    });
+}
+
+function editStudent(id, name, age, course) {
+    selectedId = id;
+    document.getElementById("name").value = name;
+    document.getElementById("age").value = age;
+    document.getElementById("course").value = course;
+}
+
+function updateStudent() {
+    if (selectedId == null) {
+        alert("Please select a student first");
+        return;
+    }
+
+    var name = document.getElementById("name").value;
+    var age = document.getElementById("age").value;
+    var course = document.getElementById("course").value;
+
+    fetch("/students/" + selectedId, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, age, course })
+    })
+    .then(function() {
+        selectedId = null;
+        clearFields();
+        getStudents();
+    })
+    .catch(function() {
+        alert("Backend is not connected on Vercel yet.");
+    });
+}
+
+function deleteStudent(id) {
+    fetch("/students/" + id, { method: "DELETE" })
+    .then(function() {
+        getStudents();
+    })
+    .catch(function() {
+        alert("Backend is not connected on Vercel yet.");
+    });
+}
+
+function clearFields() {
+    document.getElementById("name").value = "";
+    document.getElementById("age").value = "";
+    document.getElementById("course").value = "";
+}
+
+getStudents();
+</script>
 </body>
 </html>
